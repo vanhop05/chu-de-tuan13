@@ -21,10 +21,7 @@
   - 🟢 **Nạp dữ liệu HỢP LỆ**: Tự động điền dữ liệu chuẩn để kiểm tra luồng thành công.
   - 🔴 **Nạp dữ liệu LỖI**: Tự động kích hoạt toàn bộ lỗi trên form để phân tích vi phạm.
   - 🔄 **Làm mới Form**: Xóa sạch trạng thái form.
-- **Tích hợp 3 phân hệ trực quan:**
-  1. *Demo Biểu Mẫu*: Tương tác trực tiếp trên giao diện thực tế.
-  2. *Cơ Sở Lý Thuyết*: Tổng hợp kiến thức có thể tra cứu và trình chiếu.
-  3. *So Sánh & Phân Tích*: Đối chiếu chi tiết từng trường dữ liệu giữa Hợp lệ và Lỗi.
+- **Tập trung hoàn toàn vào biểu mẫu thực hành:** Giao diện trực tiếp, gọn gàng, không có thanh tab điều hướng bên dưới, giúp tập trung tối đa vào phần demo tương tác biểu mẫu.
 
 ---
 
@@ -42,17 +39,12 @@ D:\Lập Trình ĐNT\chu-de-tuan13\
 │   │   └── utils/
 │   │       └── validators.dart                  # Toàn bộ hàm Regex & logic kiểm tra tính hợp lệ
 │   ├── screens/
-│   │   ├── comparison/
-│   │   │   └── comparison_screen.dart           # Màn hình so sánh đối chiếu Hợp lệ vs Không hợp lệ
-│   │   ├── form_demo/
-│   │   │   ├── form_demo_screen.dart            # Màn hình chính xử lý Form, Controller & FocusNode
-│   │   │   └── widgets/
-│   │   │       ├── custom_text_field.dart       # Widget tái sử dụng bọc TextFormField
-│   │   │       ├── password_strength_meter.dart # Thanh đo độ mạnh mật khẩu theo thời gian thực
-│   │   │       └── result_dialog.dart           # Hộp thoại tổng kết dữ liệu khi submit thành công
-│   │   ├── theory/
-│   │   │   └── theory_screen.dart               # Màn hình trình chiếu lý thuyết trực quan
-│   │   └── home_navigation_screen.dart          # Thanh điều hướng NavigationBar 3 tab
+│   │   └── form_demo/
+│   │       ├── form_demo_screen.dart            # Màn hình chính xử lý Form, Controller & FocusNode
+│   │       └── widgets/
+│   │           ├── custom_text_field.dart       # Widget tái sử dụng bọc TextFormField
+│   │           ├── password_strength_meter.dart # Thanh đo độ mạnh mật khẩu theo thời gian thực
+│   │           └── result_dialog.dart           # Hộp thoại tổng kết dữ liệu khi submit thành công
 │   └── main.dart                                # Điểm khởi chạy ứng dụng (Entry point)
 ├── test/
 │   └── validators_test.dart                     # 26 bài test tự động cho toàn bộ các hàm kiểm tra

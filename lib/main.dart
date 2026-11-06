@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'core/theme/app_theme.dart';
-import 'screens/home_navigation_screen.dart';
+import 'screens/form_demo/form_demo_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +16,7 @@ class ChuDeTuan13App extends StatelessWidget {
       title: 'Chủ Đề 6 - Biểu Mẫu & Kiểm Tra Dữ Liệu',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      home: const HomeNavigationScreen(),
+      home: const FormDemoScreen(),
     );
   }
 }
