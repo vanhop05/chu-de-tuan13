@@ -90,33 +90,42 @@ D:\Lập Trình ĐNT\chu-de-tuan13\
 
 ## 5. KỊCH BẢN THUYẾT TRÌNH & DEMO 15 PHÚT
 
-Nhóm có thể phân chia thời lượng thuyết trình 15 phút theo bố cục chuẩn sau:
+Nhóm có thể phân chia thời lượng thuyết trình 15 phút theo bố cục tối ưu sau:
 
 - **Phút 0 - 3 (Mở đầu & Đặt vấn đề):**
   - Giới thiệu tên nhóm, thành viên và tên đề tài: *Chủ đề 6 - Biểu mẫu và kiểm tra dữ liệu đầu vào*.
-  - Tầm quan trọng của biểu mẫu trong ứng dụng di động: là cầu nối trao đổi dữ liệu giữa người dùng và máy chủ, nếu không kiểm tra chặt chẽ sẽ gây lỗi cơ sở dữ liệu, lỗi bảo mật và trải nghiệm người dùng kém.
+  - Tầm quan trọng của biểu mẫu: Là thành phần cốt lõi thu thập thông tin người dùng. Nếu thiếu kiểm tra dữ liệu (validation), ứng dụng dễ gặp lỗi runtime, dữ liệu rác trên cơ sở dữ liệu và trải nghiệm người dùng kém.
 
-- **Phút 3 - 7 (Trình bày Cơ sở lý thuyết):**
-  - Mở tab **"Cơ Sở Lý Thuyết"** trên ứng dụng.
-  - Trình bày sự khác biệt giữa `TextField` và `TextFormField`.
-  - Giải thích cách `Form` và `GlobalKey<FormState>` phối hợp để quản lý trạng thái tập trung.
-  - Phân tích cơ chế hoạt động của `validator`, các chế độ `AutovalidateMode` (`disabled` vs `onUserInteraction`).
-  - Trình bày kỹ thuật quản lý `TextEditingController` và `FocusNode` kèm tầm quan trọng của việc gọi `.dispose()`.
+- **Phút 3 - 6 (Trình bày Cơ sở lý thuyết & Kiến trúc Code):**
+  - Phân biệt sự khác nhau giữa `TextField` và `TextFormField` (liên kết Form, cơ chế hiển thị lỗi tự động).
+  - Giải thích vai trò của `Form` và `GlobalKey<FormState>` trong việc điều khiển toàn bộ biểu mẫu qua các phương thức `validate()`, `save()`, `reset()`.
+  - Phân tích cơ chế `TextEditingController` (đọc/xóa dữ liệu) và `FocusNode` (điều hướng con trỏ, tự động chuyển trường bằng phím Next).
+  - Giải thích 2 chế độ `AutovalidateMode`: `disabled` (kiểm tra khi Submit) và `onUserInteraction` (kiểm tra tức thì khi tương tác).
 
-- **Phút 7 - 12 (Thực hành Chạy Demo Trực Tiếp):**
-  - Chuyển sang tab **"Demo Biểu Mẫu"**.
-  - **Demo 1: Trường hợp Dữ liệu KHÔNG HỢP LỆ (2 phút):**
+- **Phút 6 - 12 (Thực hành Demo Trực Tiếp Trên Ứng Dụng):**
+  - **Demo 1: Trường hợp Dữ liệu KHÔNG HỢP LỆ (3 phút):**
     - Nhấn nút màu đỏ `[Nạp Dữ liệu LỖI]`.
-    - Bấm `[KIỂM TRA & GỬI BIỂU MẪU]`.
-    - Chỉ cho thầy cô thấy các trường báo đỏ đồng loạt, giải thích từng thông báo lỗi chi tiết, thanh mật khẩu báo "Rất yếu", con trỏ tự động nhảy về ô Họ tên bị lỗi đầu tiên.
-  - **Demo 2: Trường hợp Dữ liệu HỢP LỆ (2 phút):**
+    - Nhấn `[KIỂM TRA & GỬI BIỂU MẪU]`.
+    - Trình diễn cho thầy cô thấy các trường báo đỏ đồng loạt:
+      + *Họ tên*: Báo lỗi do có chữ số và không đủ 2 từ.
+      + *Email*: Báo lỗi do thiếu định dạng `@` và tên miền.
+      + *Số điện thoại*: Báo lỗi do sai đầu số VN và thiếu 10 số.
+      + *Mật khẩu*: Quá ngắn, thiếu hoa/số/ký tự đặc biệt, thanh đo hiển thị "Rất yếu" (màu đỏ).
+      + *Xác nhận mật khẩu*: Báo lỗi không trùng khớp.
+      + *Ngày sinh*: Báo lỗi chưa đủ 18 tuổi.
+      + *Chuyên ngành & Điều khoản*: Báo lỗi bắt buộc chọn và đồng ý.
+    - Chỉ rõ hiệu ứng UX: Con trỏ tự động nhảy về ô Họ tên bị lỗi đầu tiên để hỗ trợ người dùng sửa nhanh.
+  - **Demo 2: Trường hợp Dữ liệu HỢP LỆ (3 phút):**
     - Nhấn nút màu xanh `[Nạp Dữ liệu HỢP LỆ]`.
-    - Thanh đo độ mạnh mật khẩu lập tức hiển thị màu xanh lá 100% ("Mạnh").
-    - Bấm `[KIỂM TRA & GỬI BIỂU MẪU]`.
-    - Hộp thoại Dialog thành công bật lên, hiển thị toàn bộ thông tin đã được đóng gói an toàn vào `StudentRegistrationModel`.
+    - Thanh đo độ mạnh mật khẩu lập tức chuyển sang màu xanh lá 100% ("Mạnh").
+    - Nhấn `[KIỂM TRA & GỬI BIỂU MẪU]`.
+    - Hộp thoại `ResultDialog` xuất hiện thành công, hiển thị toàn bộ thông tin đã được đóng gói an toàn vào đối tượng `StudentRegistrationModel`.
+  - **Demo 3: Thử nghiệm Chuyển chế độ Kiểm tra (AutovalidateMode):**
+    - Bấm icon cài đặt trên góc phải AppBar để chuyển đổi giữa `disabled` và `onUserInteraction` để minh họa sự khác biệt về thời điểm hiển thị thông báo lỗi cho người dùng.
 
-- **Phút 12 - 14 (Tổng kết & Đối chiếu):**
-  - Chuyển sang tab **"So Sánh & Phân Tích"** để tóm lược lại các quy tắc kiểm tra và cách hệ thống xử lý.
+- **Phút 12 - 14 (Tổng kết & Giải thích Cách Xử Lý):**
+  - Tóm tắt lại nguyên tắc kiểm tra: Kiểm tra chặt chẽ phía Client giúp giảm tải cho Server và tăng tốc độ phản hồi.
+  - Giải thích cách xử lý khi dữ liệu hợp lệ: Gọi `_formKey.currentState!.save()` và đóng gói vào Model để gửi qua API.
 
 - **Phút 14 - 15 (Hỏi đáp & Kết luận):**
   - Trả lời các câu hỏi phản biện của Giảng viên và lớp học.
