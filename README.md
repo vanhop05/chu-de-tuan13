@@ -1,6 +1,6 @@
 # CHỦ ĐỀ 6: BIỂU MẪU VÀ KIỂM TRA DỮ LIỆU ĐẦU VÀO TRONG FLUTTER
 **Dự án môn học Lập Trình ĐNT - Tuần 13**  
-**Thời lượng báo cáo đề xuất:** 15 phút/nhóm
+
 
 ---
 
@@ -9,7 +9,7 @@
 2. [Cấu trúc mã nguồn](#2-cấu-trúc-mã-nguồn)
 3. [Cơ sở lý thuyết trọng tâm](#3-cơ-sở-lý-thuyết-trọng-tâm)
 4. [Các quy tắc kiểm tra dữ liệu (Validators)](#4-các-quy-tắc-kiểm-tra-dữ-liệu-validators)
-5. [Kịch bản thuyết trình & Demo 15 phút](#5-kịch-bản-thuyết-trình--demo-15-phút)
+5. [Demo trường hợp dữ liệu hợp lệ và không hợp lệ](#5-demo-trường-hợp-dữ-liệu-hợp-lệ-và-không-hợp-lệ)
 6. [Hướng dẫn cài đặt & Chạy ứng dụng](#6-hướng-dẫn-cài-đặt--chạy-ứng-dụng)
 
 ---
@@ -88,47 +88,52 @@ D:\Lập Trình ĐNT\chu-de-tuan13\
 
 ---
 
-## 5. KỊCH BẢN THUYẾT TRÌNH & DEMO 15 PHÚT
+## 5. DEMO TRƯỜNG HỢP DỮ LIỆU HỢP LỆ VÀ KHÔNG HỢP LỆ
 
-Nhóm có thể phân chia thời lượng thuyết trình 15 phút theo bố cục tối ưu sau:
+Ứng dụng tích hợp bảng điều khiển nhanh ở đầu màn hình với 3 nút chức năng (`Nạp Dữ liệu HỢP LỆ`, `Nạp Dữ liệu LỖI`, `Làm mới Form`) để trực tiếp kiểm thử hai trường hợp theo yêu cầu của chủ đề:
 
-- **Phút 0 - 3 (Mở đầu & Đặt vấn đề):**
-  - Giới thiệu tên nhóm, thành viên và tên đề tài: *Chủ đề 6 - Biểu mẫu và kiểm tra dữ liệu đầu vào*.
-  - Tầm quan trọng của biểu mẫu: Là thành phần cốt lõi thu thập thông tin người dùng. Nếu thiếu kiểm tra dữ liệu (validation), ứng dụng dễ gặp lỗi runtime, dữ liệu rác trên cơ sở dữ liệu và trải nghiệm người dùng kém.
+### 5.1. Trường hợp Dữ liệu KHÔNG HỢP LỆ (Invalid Data)
+- **Thao tác:** Bấm nút màu đỏ `[Nạp Dữ liệu LỖI]` và nhấn `[KIỂM TRA & GỬI BIỂU MẪU (SUBMIT)]`.
+- **Dữ liệu giả lập vi phạm quy tắc:**
+  1. *Họ và tên:* `"An123"` ➔ Vi phạm: Chứa chữ số và không đủ cấu trúc tối thiểu 2 từ (họ + tên).
+  2. *Email:* `"an.nguyen_sai_dinh_dang"` ➔ Vi phạm: Thiếu ký tự `@` và tên miền hợp lệ.
+  3. *Số điện thoại:* `"0123456"` ➔ Vi phạm: Độ dài chỉ có 7 số (cần 10 số) và không thuộc dải đầu số di động Việt Nam.
+  4. *Mật khẩu:* `"123"` ➔ Vi phạm: Độ dài < 8 ký tự, thiếu chữ hoa, số và ký tự đặc biệt. Thước đo hiển thị màu đỏ báo "Rất yếu".
+  5. *Xác nhận mật khẩu:* `"khong_khop"` ➔ Vi phạm: Không trùng khớp với mật khẩu đã nhập.
+  6. *Ngày sinh:* Chọn năm sinh 2011 (15 tuổi) ➔ Vi phạm: Chưa đủ điều kiện từ 18 tuổi trở lên.
+  7. *Chuyên ngành:* Giá trị `null` ➔ Vi phạm: Bắt buộc chọn một ngành học.
+  8. *Điều khoản sử dụng:* Chưa tích chọn Checkbox ➔ Vi phạm: Bắt buộc đồng ý điều khoản trước khi gửi.
+- **Cách xử lý kỹ thuật trong mã nguồn:**
+  - Khi gọi `_formKey.currentState!.validate()`, Flutter duyệt qua toàn bộ các `TextFormField` con. Do các hàm trong `FormValidators` trả về chuỗi thông báo lỗi (khác `null`), hàm `validate()` trả về `false`.
+  - Biểu mẫu tự động bật chế độ `_autovalidateMode = AutovalidateMode.onUserInteraction`, giúp thông báo lỗi cập nhật tức thì khi người dùng gõ sửa lại.
+  - Sử dụng cơ chế FocusNode: Hệ thống kiểm tra trường lỗi đầu tiên và kích hoạt `_nameFocus.requestFocus()`, tự động đặt con trỏ vào ô Họ và tên để người dùng chỉnh sửa ngay mà không cần cuộn trang tìm lỗi.
+  - Hiển thị SnackBar cảnh báo màu đỏ thông báo người dùng kiểm tra lại thông tin.
 
-- **Phút 3 - 6 (Trình bày Cơ sở lý thuyết & Kiến trúc Code):**
-  - Phân biệt sự khác nhau giữa `TextField` và `TextFormField` (liên kết Form, cơ chế hiển thị lỗi tự động).
-  - Giải thích vai trò của `Form` và `GlobalKey<FormState>` trong việc điều khiển toàn bộ biểu mẫu qua các phương thức `validate()`, `save()`, `reset()`.
-  - Phân tích cơ chế `TextEditingController` (đọc/xóa dữ liệu) và `FocusNode` (điều hướng con trỏ, tự động chuyển trường bằng phím Next).
-  - Giải thích 2 chế độ `AutovalidateMode`: `disabled` (kiểm tra khi Submit) và `onUserInteraction` (kiểm tra tức thì khi tương tác).
+---
 
-- **Phút 6 - 12 (Thực hành Demo Trực Tiếp Trên Ứng Dụng):**
-  - **Demo 1: Trường hợp Dữ liệu KHÔNG HỢP LỆ (3 phút):**
-    - Nhấn nút màu đỏ `[Nạp Dữ liệu LỖI]`.
-    - Nhấn `[KIỂM TRA & GỬI BIỂU MẪU]`.
-    - Trình diễn cho thầy cô thấy các trường báo đỏ đồng loạt:
-      + *Họ tên*: Báo lỗi do có chữ số và không đủ 2 từ.
-      + *Email*: Báo lỗi do thiếu định dạng `@` và tên miền.
-      + *Số điện thoại*: Báo lỗi do sai đầu số VN và thiếu 10 số.
-      + *Mật khẩu*: Quá ngắn, thiếu hoa/số/ký tự đặc biệt, thanh đo hiển thị "Rất yếu" (màu đỏ).
-      + *Xác nhận mật khẩu*: Báo lỗi không trùng khớp.
-      + *Ngày sinh*: Báo lỗi chưa đủ 18 tuổi.
-      + *Chuyên ngành & Điều khoản*: Báo lỗi bắt buộc chọn và đồng ý.
-    - Chỉ rõ hiệu ứng UX: Con trỏ tự động nhảy về ô Họ tên bị lỗi đầu tiên để hỗ trợ người dùng sửa nhanh.
-  - **Demo 2: Trường hợp Dữ liệu HỢP LỆ (3 phút):**
-    - Nhấn nút màu xanh `[Nạp Dữ liệu HỢP LỆ]`.
-    - Thanh đo độ mạnh mật khẩu lập tức chuyển sang màu xanh lá 100% ("Mạnh").
-    - Nhấn `[KIỂM TRA & GỬI BIỂU MẪU]`.
-    - Hộp thoại `ResultDialog` xuất hiện thành công, hiển thị toàn bộ thông tin đã được đóng gói an toàn vào đối tượng `StudentRegistrationModel`.
-  - **Demo 3: Thử nghiệm Chuyển chế độ Kiểm tra (AutovalidateMode):**
-    - Bấm icon cài đặt trên góc phải AppBar để chuyển đổi giữa `disabled` và `onUserInteraction` để minh họa sự khác biệt về thời điểm hiển thị thông báo lỗi cho người dùng.
+### 5.2. Trường hợp Dữ liệu HỢP LỆ (Valid Data)
+- **Thao tác:** Bấm nút màu xanh `[Nạp Dữ liệu HỢP LỆ]` và nhấn `[KIỂM TRA & GỬI BIỂU MẪU (SUBMIT)]`.
+- **Dữ liệu mẫu thỏa mãn chuẩn:**
+  1. *Họ và tên:* `"Nguyễn Văn An"` ➔ Thỏa mãn: Chữ cái tiếng Việt có dấu, độ dài 13 ký tự, gồm 3 từ.
+  2. *Email:* `"nguyenvanan.it@gmail.com"` ➔ Thỏa mãn: Khớp 100% regex RFC email.
+  3. *Số điện thoại:* `"0988123456"` ➔ Thỏa mãn: Đủ 10 chữ số, đúng đầu số 09 mạng Viettel.
+  4. *Mật khẩu:* `"AnNguyen@2026"` ➔ Thỏa mãn: Đủ 13 ký tự, có chữ hoa, thường, số, ký tự đặc biệt. Thước đo hiển thị màu xanh lá 100% ("Mạnh").
+  5. *Xác nhận mật khẩu:* `"AnNguyen@2026"` ➔ Thỏa mãn: Trùng khớp từng ký tự với mật khẩu.
+  6. *Ngày sinh:* `"15/05/2003"` (23 tuổi) ➔ Thỏa mãn: Độ tuổi $\ge 18$.
+  7. *Chuyên ngành:* `"Công nghệ Thông tin"` ➔ Thỏa mãn: Đã chọn chuyên ngành.
+  8. *Điều khoản sử dụng:* Đã tích chọn Checkbox cam kết.
+- **Cách xử lý kỹ thuật trong mã nguồn:**
+  - `_formKey.currentState!.validate()` trả về `true` vì tất cả hàm `validator` đều trả về `null`.
+  - Hệ thống gọi `_formKey.currentState!.save()` để hoàn tất việc lưu trữ trạng thái biểu mẫu.
+  - Đóng gói toàn bộ thông tin người dùng vào đối tượng dữ liệu `StudentRegistrationModel`.
+  - Mở hộp thoại `ResultDialog` hiển thị bảng tổng hợp thông tin đăng ký thành công kèm lời chúc mừng và thông báo xác thực an toàn.
 
-- **Phút 12 - 14 (Tổng kết & Giải thích Cách Xử Lý):**
-  - Tóm tắt lại nguyên tắc kiểm tra: Kiểm tra chặt chẽ phía Client giúp giảm tải cho Server và tăng tốc độ phản hồi.
-  - Giải thích cách xử lý khi dữ liệu hợp lệ: Gọi `_formKey.currentState!.save()` và đóng gói vào Model để gửi qua API.
+---
 
-- **Phút 14 - 15 (Hỏi đáp & Kết luận):**
-  - Trả lời các câu hỏi phản biện của Giảng viên và lớp học.
+### 5.3. Thử nghiệm Chế độ Kiểm tra (AutovalidateMode)
+- Trên góc phải `AppBar` có menu cài đặt cho phép chuyển đổi linh hoạt:
+  - **Chỉ kiểm tra khi Submit (`AutovalidateMode.disabled`):** Chỉ hiển thị lỗi khi người dùng bấm nút Gửi biểu mẫu.
+  - **Kiểm tra trực tiếp (`AutovalidateMode.onUserInteraction`):** Tự động kiểm tra và phản hồi lỗi ngay trong quá trình người dùng nhập liệu hoặc rời khỏi ô nhập.
 
 ---
 
