@@ -9,6 +9,7 @@ class StudentRegistrationModel {
   final bool agreedToTerms;
   final String? bio;
 
+  /// Khởi tạo thông tin đăng ký của sinh viên.
   const StudentRegistrationModel({
     required this.fullName,
     required this.email,
@@ -21,6 +22,7 @@ class StudentRegistrationModel {
     this.bio,
   });
 
+  /// Tính tuổi hiện tại dựa trên ngày sinh của sinh viên.
   int get age {
     final now = DateTime.now();
     int age = now.year - dateOfBirth.year;
@@ -31,6 +33,7 @@ class StudentRegistrationModel {
     return age;
   }
 
+  /// Trả về ngày sinh theo định dạng ngày/tháng/năm.
   String get formattedDob {
     final d = dateOfBirth.day.toString().padLeft(2, '0');
     final m = dateOfBirth.month.toString().padLeft(2, '0');
@@ -38,6 +41,7 @@ class StudentRegistrationModel {
     return '$d/$m/$y';
   }
 
+  /// Chuyển thông tin đăng ký thành một map để hiển thị trên giao diện.
   Map<String, String> toDisplayMap() {
     return {
       'Họ và tên': fullName,

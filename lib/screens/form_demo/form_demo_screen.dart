@@ -528,7 +528,7 @@ class _FormDemoScreenState extends State<FormDemoScreen> {
                             ),
                           ),
 
-                          // 6. Ngày sinh (DatePicker & Validation tuổi)
+                          // 6. Ngày sinh 
                           CustomTextField(
                             controller: _dobController,
                             focusNode: _dobFocus,
@@ -544,7 +544,7 @@ class _FormDemoScreenState extends State<FormDemoScreen> {
                             onTap: _selectDateOfBirth,
                           ),
 
-                          // 7. Chuyên ngành (DropdownButtonFormField)
+                          // 7. Chuyên ngành 
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -592,7 +592,7 @@ class _FormDemoScreenState extends State<FormDemoScreen> {
                             ],
                           ),
 
-                          // 8. Giới tính (SegmentedButton Material 3)
+                          // 8. Giới tính 
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -637,7 +637,7 @@ class _FormDemoScreenState extends State<FormDemoScreen> {
                             ],
                           ),
 
-                          // 9. Giới thiệu bản thân (TextField không bắt buộc - minh họa TextField đơn)
+                          // 9. Giới thiệu bản thân 
                           CustomTextField(
                             controller: _bioController,
                             label: 'Giới thiệu bản thân (Tùy chọn)',
@@ -648,7 +648,7 @@ class _FormDemoScreenState extends State<FormDemoScreen> {
                             textInputAction: TextInputAction.newline,
                           ),
 
-                          // 10. Điều khoản sử dụng (FormField Validation)
+                          // 10. Điều khoản sử dụng 
                           FormField<bool>(
                             initialValue: _agreedToTerms,
                             validator: (_) => !_agreedToTerms
